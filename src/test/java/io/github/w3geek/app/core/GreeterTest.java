@@ -14,6 +14,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.isEmptyString;
 
 public class GreeterTest {
+	private static final String LINE_SPRT = System.lineSeparator();
+	private static final String USER_NAME = "W3G33K";
+
 	private ByteArrayOutputStream greeterOutputStream;
 	private PrintStream greeterPrintStream;
 	private Greeter greeter;
@@ -48,12 +51,52 @@ public class GreeterTest {
 	}
 
 	@Test
-	public void testWhenGreetHasBeenInvoked_withLineSeparatorInsertedIsTrue_greetingShouldNotBeEmpty() {
+	public void testWhenGreetHasBeenInvoked_withLineSeparatorInsertedSet_greetingShouldNotBeEmpty() {
 		greeter.setLineSeparatorInserted(true);
 		greeter.greet();
 
 		String greeterOutputStreamData = greeterOutputStream.toString();
 		assertThat(greeterOutputStreamData, containsString("Hello, world!"));
-		assertThat(greeterOutputStreamData, endsWith(System.lineSeparator()));
+		assertThat(greeterOutputStreamData, endsWith(LINE_SPRT));
+	}
+
+	@Test
+	public void testWhenGreetHasBeenInvoked_withNoUserNameSet_greetingShouldNotBeEmpty() {
+		greeter.setUsername(null);
+		greeter.greet();
+
+		String greeterOutputStreamData = greeterOutputStream.toString();
+		assertThat(greeterOutputStreamData, is("Hello, world!"));
+	}
+
+	@Test
+	public void testWhenGreetHasBeenInvoked_withBlankUserNameSet_greetingShouldNotBeEmpty() {
+		greeter.setUsername("");
+		greeter.greet();
+
+		String greeterOutputStreamData = greeterOutputStream.toString();
+		assertThat(greeterOutputStreamData, is("Hello, world!"));
+	}
+
+	@Test
+	public void testWhenGreetHasBeenInvoked_withUserNameSet_greetingShouldNotBeEmpty() {
+		greeter.setUsername(USER_NAME);
+		greeter.greet();
+
+		String greeterOutputStreamData = greeterOutputStream.toString();
+		String expectedGreeting = String.format("Hello, %s!", USER_NAME);
+		assertThat(greeterOutputStreamData, is(expectedGreeting));
+	}
+
+	@Test
+	public void testWhenGreetHasBeenInvoked_withLineSeparatorInsertedAndUserNameSet_greetingShouldNotBeEmpty() {
+		greeter.setLineSeparatorInserted(true);
+		greeter.setUsername(USER_NAME);
+		greeter.greet();
+
+		String greeterOutputStreamData = greeterOutputStream.toString();
+		String expectedGreeting = String.format("Hello, %s!", USER_NAME);
+		assertThat(greeterOutputStreamData, containsString(expectedGreeting));
+		assertThat(greeterOutputStreamData, endsWith(LINE_SPRT));
 	}
 }

@@ -7,35 +7,42 @@ import java.io.PrintStream;
 public class Greeter {
 	private boolean lineSeparatorInserted;
 	private PrintStream stdout;
-	private String user = Constants.DEFAULT_USER;
+	private String username = Constants.DEFAULT_USER_NAME;
 
 	public Greeter() {
 		this(System.out, true);
+	}
+
+	public Greeter(String username) {
+		this(System.out, true);
+		setUsername(username);
 	}
 
 	protected Greeter(PrintStream stdout) {
 		this(stdout, false);
 	}
 
-	protected Greeter(PrintStream stdout, boolean lineSeparatorInserted) {
+	private Greeter(PrintStream stdout, boolean lineSeparatorInserted) {
 		this.stdout = stdout;
 		setLineSeparatorInserted(lineSeparatorInserted);
 	}
 
-	public boolean isLineSeparatorInserted() {
+	protected boolean isLineSeparatorInserted() {
 		return lineSeparatorInserted;
 	}
 
-	public void setLineSeparatorInserted(boolean lineSeparatorInserted) {
+	protected void setLineSeparatorInserted(boolean lineSeparatorInserted) {
 		this.lineSeparatorInserted = lineSeparatorInserted;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUsername(String username) {
+		if (username != null && !username.isEmpty()) {
+			this.username = username;
+		}
 	}
 
 	public void greet() {
@@ -44,6 +51,6 @@ public class Greeter {
 			format = (format + "%n");
 		}
 
-		stdout.printf(format, user);
+		stdout.printf(format, username);
 	}
 }
