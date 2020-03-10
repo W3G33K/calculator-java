@@ -4,8 +4,8 @@ import io.github.w3geek.app.core.Greeter;
 
 public class App {
 	public static void main(String[] args) {
-		String username = processUserName(args);
-		Greeter greeter = new Greeter(username);
+		Greeter greeter = new Greeter();
+		greeter.setUsername(processUserName(args));
 		greeter.greet();
 	}
 

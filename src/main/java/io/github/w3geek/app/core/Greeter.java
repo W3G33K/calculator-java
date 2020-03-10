@@ -13,11 +13,6 @@ public class Greeter {
 		this(System.out, true);
 	}
 
-	public Greeter(String username) {
-		this(System.out, true);
-		setUsername(username);
-	}
-
 	protected Greeter(PrintStream stdout) {
 		this(stdout, false);
 	}
