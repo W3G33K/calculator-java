@@ -11,6 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -23,44 +24,44 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class GreeterTest {
+public class GreetUserTest {
 	private static final String LINE_SPRT = System.lineSeparator();
 	private static final String USER_NAME = "W3G33K";
 
-	private ByteArrayOutputStream greeterOutputStream;
-	private PrintStream greeterPrintStream;
-	private Greeter greeter;
+	private ByteArrayOutputStream greetUserOutputStream;
+	private PrintStream greetUserPrintStream;
+	private GreetUser greetUser;
 
 	@Mock
 	private User mockUser;
 
 	@Before
 	public void setUp() {
-		greeterOutputStream = new ByteArrayOutputStream();
-		greeterPrintStream = new PrintStream(greeterOutputStream);
-		greeter = new Greeter(greeterPrintStream);
+		greetUserOutputStream = new ByteArrayOutputStream();
+		greetUserPrintStream = new PrintStream(greetUserOutputStream);
+		greetUser = new GreetUser(greetUserPrintStream);
 	}
 
 	@After
 	public void tearDown() {
-		greeterPrintStream.close();
-		greeterPrintStream = null;
-		greeterOutputStream = null;
-		greeter = null;
+		greetUserPrintStream.close();
+		greetUserPrintStream = null;
+		greetUserOutputStream = null;
+		greetUser = null;
 	}
 
 	@Test
 	public void testWhenGreetHasNotBeenInvoked_greetingShouldBeEmpty() {
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		assertThat(greeterOutputStreamData, isEmptyString());
 	}
 
 	@Test
 	public void testWhenGreetHasBeenInvoked_greetingShouldNotBeEmpty() {
 		when(mockUser.getName()).thenReturn(Constants.DEFAULT_USER_NAME);
-		greeter.greet(mockUser);
+		greetUser.greet(mockUser);
 
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		assertThat(greeterOutputStreamData, is("Hello, world!"));
 		verify(mockUser, atLeastOnce()).getName();
 	}
@@ -68,10 +69,10 @@ public class GreeterTest {
 	@Test
 	public void testWhenGreetHasBeenInvoked_withLineSeparatorInsertedSet_greetingShouldNotBeEmpty() {
 		when(mockUser.getName()).thenReturn(Constants.DEFAULT_USER_NAME);
-		greeter.setLineSeparatorInserted(true);
-		greeter.greet(mockUser);
+		greetUser.setLineSeparatorInserted(true);
+		greetUser.greet(mockUser);
 
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		assertThat(greeterOutputStreamData, containsString("Hello, world!"));
 		assertThat(greeterOutputStreamData, endsWith(LINE_SPRT));
 		verify(mockUser, atLeastOnce()).getName();
@@ -80,9 +81,9 @@ public class GreeterTest {
 	@Test
 	public void testWhenGreetHasBeenInvoked_withNoUserNameSet_greetingShouldNotBeEmpty() {
 		when(mockUser.getName()).thenReturn(Constants.DEFAULT_USER_NAME);
-		greeter.greet(mockUser);
+		greetUser.greet(mockUser);
 
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		assertThat(greeterOutputStreamData, is("Hello, world!"));
 		verify(mockUser, atLeastOnce()).getName();
 	}
@@ -90,9 +91,9 @@ public class GreeterTest {
 	@Test
 	public void testWhenGreetHasBeenInvoked_withBlankUserNameSet_greetingShouldNotBeEmpty() {
 		when(mockUser.getName()).thenReturn(Constants.DEFAULT_USER_NAME);
-		greeter.greet(mockUser);
+		greetUser.greet(mockUser);
 
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		assertThat(greeterOutputStreamData, is("Hello, world!"));
 		verify(mockUser, atLeastOnce()).getName();
 	}
@@ -100,9 +101,9 @@ public class GreeterTest {
 	@Test
 	public void testWhenGreetHasBeenInvoked_withUserNameSet_greetingShouldNotBeEmpty() {
 		when(mockUser.getName()).thenReturn(USER_NAME);
-		greeter.greet(mockUser);
+		greetUser.greet(mockUser);
 
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		String expectedGreeting = String.format("Hello, %s!", USER_NAME);
 		assertThat(greeterOutputStreamData, is(expectedGreeting));
 		verify(mockUser, atLeastOnce()).getName();
@@ -111,13 +112,19 @@ public class GreeterTest {
 	@Test
 	public void testWhenGreetHasBeenInvoked_withLineSeparatorInsertedAndUserNameSet_greetingShouldNotBeEmpty() {
 		when(mockUser.getName()).thenReturn(USER_NAME);
-		greeter.setLineSeparatorInserted(true);
-		greeter.greet(mockUser);
+		greetUser.setLineSeparatorInserted(true);
+		greetUser.greet(mockUser);
 
-		String greeterOutputStreamData = greeterOutputStream.toString();
+		String greeterOutputStreamData = greetUserOutputStream.toString();
 		String expectedGreeting = String.format("Hello, %s!", USER_NAME);
 		assertThat(greeterOutputStreamData, containsString(expectedGreeting));
 		assertThat(greeterOutputStreamData, endsWith(LINE_SPRT));
 		verify(mockUser, atLeastOnce()).getName();
+	}
+
+	public void testWhenGreetHasBeenInvoked_withDefaultLocaleSetToUnitedStates_greetingShouldNotBeEmpty() {
+		when(mockUser.getLocale()).thenReturn(Locale.US);
+		assertThat(greetUser.when(mockUser), is(true));
+		verify(mockUser, atLeastOnce()).getLocale();
 	}
 }

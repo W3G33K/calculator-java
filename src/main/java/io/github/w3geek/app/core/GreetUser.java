@@ -3,20 +3,21 @@ package io.github.w3geek.app.core;
 import io.github.w3geek.app.dataobject.User;
 
 import java.io.PrintStream;
+import java.util.Locale;
 
-public class Greeter {
+public class GreetUser implements IGreetUser {
 	private boolean lineSeparatorInserted;
 	private PrintStream stdout;
 
-	public Greeter() {
+	public GreetUser() {
 		this(System.out, true);
 	}
 
-	protected Greeter(PrintStream stdout) {
+	protected GreetUser(PrintStream stdout) {
 		this(stdout, false);
 	}
 
-	private Greeter(PrintStream stdout, boolean lineSeparatorInserted) {
+	private GreetUser(PrintStream stdout, boolean lineSeparatorInserted) {
 		this.stdout = stdout;
 		setLineSeparatorInserted(lineSeparatorInserted);
 	}
@@ -29,6 +30,12 @@ public class Greeter {
 		this.lineSeparatorInserted = lineSeparatorInserted;
 	}
 
+	@Override
+	public boolean when(User user) {
+		return Locale.US.equals(user.getLocale());
+	}
+
+	@Override
 	public void greet(User user) {
 		String format = "Hello, %s!";
 		if (lineSeparatorInserted) {
