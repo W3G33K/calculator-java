@@ -1,13 +1,12 @@
 package io.github.w3geek.app.core;
 
-import io.github.w3geek.app.config.Constants;
+import io.github.w3geek.app.dataobject.User;
 
 import java.io.PrintStream;
 
 public class Greeter {
 	private boolean lineSeparatorInserted;
 	private PrintStream stdout;
-	private String username = Constants.DEFAULT_USER_NAME;
 
 	public Greeter() {
 		this(System.out, true);
@@ -30,22 +29,12 @@ public class Greeter {
 		this.lineSeparatorInserted = lineSeparatorInserted;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		if (username != null && !username.isEmpty()) {
-			this.username = username;
-		}
-	}
-
-	public void greet() {
+	public void greet(User user) {
 		String format = "Hello, %s!";
 		if (lineSeparatorInserted) {
 			format = (format + "%n");
 		}
 
-		stdout.printf(format, username);
+		stdout.printf(format, user.getName());
 	}
 }
