@@ -6,10 +6,13 @@
 	<groupId>io.github.w3geek</groupId>
 	<artifactId>hello-java</artifactId>
 	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<properties>
+		<manifest.main.class>io.github.w3geek.app.App</manifest.main.class>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -36,6 +39,19 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>${manifest.main.class}</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
