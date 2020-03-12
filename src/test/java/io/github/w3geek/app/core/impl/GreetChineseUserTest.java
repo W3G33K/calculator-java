@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class GreetEnglishUserTest {
+public class GreetChineseUserTest {
 	private static final String USER_NAME = "W3G33K";
 
 	private IGreetUser greetUser;
@@ -30,7 +30,7 @@ public class GreetEnglishUserTest {
 
 	@Before
 	public void setUp() {
-		greetUser = new GreetEnglishUser();
+		greetUser = new GreetChineseUser();
 	}
 
 	@After
@@ -40,36 +40,36 @@ public class GreetEnglishUserTest {
 
 	@Test
 	public void testWhenGreetHasBeenInvoked_greetingShouldNotBeEmpty() {
-		when(userMock.getName()).thenReturn(Constants.DEFAULT_USER_NAME_EN);
-		assertThat(greetUser.greet(userMock), is("Hello, world!"));
+		when(userMock.getName()).thenReturn(Constants.DEFAULT_USER_NAME_ZH);
+		assertThat(greetUser.greet(userMock), is("你好， 世界！"));
 		verify(userMock, atLeastOnce()).getName();
 	}
 
 	@Test
 	public void testWhenGreetHasBeenInvoked_withUsersNameSet_greetingShouldNotBeEmpty() {
 		when(userMock.getName()).thenReturn(USER_NAME);
-		assertThat(greetUser.greet(userMock), is(String.format("Hello, %s!", USER_NAME)));
+		assertThat(greetUser.greet(userMock), is(String.format("你好， %s！", USER_NAME)));
 		verify(userMock, atLeastOnce()).getName();
 	}
 
 	@Test
-	public void testWhenUsersLocaleSetToUnitedStates_caseShouldReturnTrue() {
+	public void testWhenUsersLocaleSetToUnitedStates_caseShouldReturnFalse() {
 		when(userMock.getLocale()).thenReturn(Locale.US);
-		assertThat(greetUser.when(userMock), is(true));
-		verify(userMock, atLeastOnce()).getLocale();
-	}
-
-	@Test
-	public void testWhenUsersLocaleSetToCanada_caseShouldReturnTrue() {
-		when(userMock.getLocale()).thenReturn(Locale.CANADA);
-		assertThat(greetUser.when(userMock), is(true));
-		verify(userMock, atLeastOnce()).getLocale();
-	}
-
-	@Test
-	public void testWhenUsersLocaleSetToChina_caseShouldReturnFalse() {
-		when(userMock.getLocale()).thenReturn(Locale.CHINA);
 		assertThat(greetUser.when(userMock), is(false));
+		verify(userMock, atLeastOnce()).getLocale();
+	}
+
+	@Test
+	public void testWhenUsersLocaleSetToChina_caseShouldReturnTrue() {
+		when(userMock.getLocale()).thenReturn(Locale.CHINA);
+		assertThat(greetUser.when(userMock), is(true));
+		verify(userMock, atLeastOnce()).getLocale();
+	}
+
+	@Test
+	public void testWhenUsersLocaleSetToTaiwan_caseShouldReturnTrue() {
+		when(userMock.getLocale()).thenReturn(Locale.TAIWAN);
+		assertThat(greetUser.when(userMock), is(true));
 		verify(userMock, atLeastOnce()).getLocale();
 	}
 

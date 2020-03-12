@@ -38,7 +38,7 @@ public class GreetDefaultUserTest {
 
 	@Test
 	public void testWhenGreetHasBeenInvoked_greetingShouldNotBeEmpty() {
-		when(userMock.getName()).thenReturn(Constants.DEFAULT_USER_NAME);
+		when(userMock.getName()).thenReturn(Constants.DEFAULT_USER_NAME_EN);
 		assertThat(greetUser.greet(userMock), is("Hello, world!"));
 		verify(userMock, atLeastOnce()).getName();
 	}

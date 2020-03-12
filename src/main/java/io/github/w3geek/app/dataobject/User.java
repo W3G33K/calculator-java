@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class User {
 	private Locale locale;
-	private String name = Constants.DEFAULT_USER_NAME;
+	private String name;
 
 	public User() {
 		this(null, Locale.getDefault());
@@ -17,7 +17,8 @@ public class User {
 		this(name, Locale.getDefault());
 	}
 
-	public User(String name, Locale locale) {
+	protected User(String name, Locale locale) {
+		setDefaultName(locale);
 		setName(name);
 		setLocale(locale);
 	}
@@ -35,10 +36,23 @@ public class User {
 	}
 
 	public void setName(String name) {
-		if (StringUtils.isBlank(name)) {
-			return;
+		if (StringUtils.isNotBlank(name)) {
+			this.name = name;
 		}
+	}
 
-		this.name = name;
+	private void setDefaultName(Locale locale) {
+		String userLocale = locale.toString();
+		switch (userLocale) {
+			case Constants.ZH_CN:
+			case Constants.ZH_TW:
+				setName(Constants.DEFAULT_USER_NAME_ZH);
+				break;
+			case Constants.EN_CA:
+			case Constants.EN_US:
+			case Constants.EN_UK:
+			default:
+				setName(Constants.DEFAULT_USER_NAME_EN);
+		}
 	}
 }
