@@ -1,6 +1,7 @@
 package io.github.w3geek.app.dataobject;
 
 import io.github.w3geek.app.config.Constants;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 
@@ -34,7 +35,7 @@ public class User {
 	}
 
 	public void setName(String name) {
-		if (name == null || name.isEmpty()) {
+		if (StringUtils.isBlank(name)) {
 			return;
 		}
 

@@ -22,8 +22,20 @@ public class UserTest {
 	}
 
 	@Test
-	public void testWhenUserDoesProvideName_butProvidedNameIsBlank_shouldReturnDefaultUserName() {
+	public void testWhenUserDoesProvideName_butProvidedNameIsNull_shouldReturnDefaultUserName() {
+		User user = new User(null);
+		assertThat(user.getName(), is(DEFAULT_USER_NAME));
+	}
+
+	@Test
+	public void testWhenUserDoesProvideName_butProvidedNameIsEmpty_shouldReturnDefaultUserName() {
 		User user = new User("");
+		assertThat(user.getName(), is(DEFAULT_USER_NAME));
+	}
+
+	@Test
+	public void testWhenUserDoesProvideName_butProvidedNameIsBlank_shouldReturnDefaultUserName() {
+		User user = new User("   ");
 		assertThat(user.getName(), is(DEFAULT_USER_NAME));
 	}
 }

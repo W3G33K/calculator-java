@@ -4,5 +4,5 @@ import io.github.w3geek.app.dataobject.User;
 
 public interface IGreetUser {
 	boolean when(User user);
-	void greet(User user);
+	String greet(User user);
 }
