@@ -1,6 +1,7 @@
-package io.github.w3geek.app.core;
+package io.github.w3geek.app.core.impl;
 
 import io.github.w3geek.app.config.Constants;
+import io.github.w3geek.app.core.IGreetUser;
 import io.github.w3geek.app.dataobject.User;
 import org.junit.After;
 import org.junit.Before;

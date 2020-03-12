@@ -1,7 +1,7 @@
 package io.github.w3geek.app;
 
-import io.github.w3geek.app.core.GreetDefaultUser;
 import io.github.w3geek.app.core.IGreetUser;
+import io.github.w3geek.app.core.impl.GreetDefaultUser;
 import io.github.w3geek.app.dataobject.User;
 
 public class App {
