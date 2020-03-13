@@ -1,6 +1,5 @@
 package io.github.w3geek.app.core.impl;
 
-import io.github.w3geek.app.config.Constants;
 import io.github.w3geek.app.core.IGreetUser;
 import io.github.w3geek.app.dataobject.User;
 import org.junit.After;
@@ -21,6 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class GreetFrenchUserTest {
+	private static final String DEFAULT_USER_NAME_FR = "le monde";
 	private static final String USER_NAME = "W3G33K";
 
 	private IGreetUser greetUser;
@@ -40,7 +40,7 @@ public class GreetFrenchUserTest {
 
 	@Test
 	public void testWhenGreetHasBeenInvoked_greetingShouldNotBeEmpty() {
-		when(userMock.getName()).thenReturn(Constants.DEFAULT_USER_NAME_FR);
+		when(userMock.getName()).thenReturn(DEFAULT_USER_NAME_FR);
 		assertThat(greetUser.greet(userMock), is("Bonjour le monde!"));
 		verify(userMock, atLeastOnce()).getName();
 	}
