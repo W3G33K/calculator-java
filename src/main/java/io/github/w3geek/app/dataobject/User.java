@@ -48,6 +48,10 @@ public class User {
 			case Constants.ZH_TW:
 				setName(Constants.DEFAULT_USER_NAME_ZH);
 				break;
+			case Constants.FR_CA:
+			case Constants.FR_FR:
+				setName(Constants.DEFAULT_USER_NAME_FR);
+				break;
 			case Constants.EN_CA:
 			case Constants.EN_US:
 			case Constants.EN_UK:
